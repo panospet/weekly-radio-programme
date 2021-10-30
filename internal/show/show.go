@@ -40,11 +40,16 @@ func (o Show) Validate() error {
 	if len(parts) != 2 {
 		return fmt.Errorf("invalid timeslot. Acceptable format is hh:mm-hh:mm")
 	}
-	if _, err := time.Parse("15:04", parts[0]); err != nil {
+	start, err := time.Parse("15:04", parts[0])
+	if err != nil {
 		return fmt.Errorf("invalid timeslot. %s not a valid time", parts[0])
 	}
-	if _, err := time.Parse("15:04", parts[1]); err != nil {
+	end, err := time.Parse("15:04", parts[1])
+	if err != nil {
 		return fmt.Errorf("invalid timeslot. %s not a valid time", parts[1])
+	}
+	if end.Before(start) {
+		return fmt.Errorf("invalid timeslot. ending time cannot be before starting time")
 	}
 
 	return nil

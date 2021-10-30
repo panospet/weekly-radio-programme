@@ -8,7 +8,7 @@ import (
 )
 
 func TestApi_HealthCheck(t *testing.T) {
-	api := New(nil)
+	api := New(nil, 8989)
 	req, _ := http.NewRequest("GET", "/health", nil)
 	w := httptest.NewRecorder()
 	api.Router.ServeHTTP(w, req)

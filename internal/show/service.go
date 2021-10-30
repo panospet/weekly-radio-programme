@@ -54,7 +54,7 @@ func (o *Service) CheckForConflicts(ctx context.Context, show Show) error {
 		}
 		if conflict && show.Id != s.Id {
 			return ErrTimeslotConflict{
-				Message: fmt.Sprintf(`conflict with show "%s" which takes place every %s %s`, s.Title, s.Weekday,
+				Message: fmt.Sprintf(`conflict with show '%s' which takes place every %s %s`, s.Title, s.Weekday,
 					s.Timeslot)}
 		}
 	}

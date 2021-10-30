@@ -10,6 +10,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	"sync"
 	"weekly-radio-programme/internal/show"
 )
@@ -61,7 +62,11 @@ func (o *Api) getAll(w http.ResponseWriter, r *http.Request) {
 }
 
 func (o *Api) get(w http.ResponseWriter, r *http.Request) {
-	id := r.Context().Value("id").(int)
+	idStr := chi.URLParam(r, "id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		renderJson(w,r,http.StatusBadRequest,Response{Message: "bad id given"})
+	}
 	s, err := o.srv.Get(r.Context(), id)
 	if err != nil {
 		log.Println(err)
@@ -115,7 +120,11 @@ func (o *Api) create(w http.ResponseWriter, r *http.Request) {
 }
 
 func (o *Api) update(w http.ResponseWriter, r *http.Request) {
-	id := r.Context().Value("id").(int)
+	idStr := chi.URLParam(r, "id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		renderJson(w,r,http.StatusBadRequest,Response{Message: "bad id given"})
+	}
 	bodyBytes, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		renderJson(w, r, http.StatusBadRequest, Response{Message: "cannot read body"})
@@ -152,7 +161,11 @@ func (o *Api) update(w http.ResponseWriter, r *http.Request) {
 }
 
 func (o *Api) delete(w http.ResponseWriter, r *http.Request) {
-	id := r.Context().Value("id").(int)
+	idStr := chi.URLParam(r, "id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		renderJson(w,r,http.StatusBadRequest,Response{Message: "bad id given"})
+	}
 	if err := o.srv.Delete(r.Context(), id); err != nil {
 		log.Println(err)
 		renderJson(w, r, http.StatusInternalServerError, Response{})

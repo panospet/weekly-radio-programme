@@ -34,8 +34,8 @@ func (o *PostgresRepo) Add(ctx context.Context, show Show) (int, error) {
 }
 
 func (o *PostgresRepo) Update(ctx context.Context, show Show) error {
-	q := "update shows set title=$1,weekday=$2,timeslot=$3,description=$4,created_at=$5,updated_at=$6"
-	_, err := o.conn.Exec(ctx, q, show.Title, show.Weekday, show.Timeslot, show.Description, show.CreatedAt, time.Now())
+	q := "update shows set title=$1,weekday=$2,timeslot=$3,description=$4,updated_at=$5 where id=$6"
+	_, err := o.conn.Exec(ctx, q, show.Title, show.Weekday, show.Timeslot, show.Description, time.Now(), show.Id)
 	return err
 }
 
