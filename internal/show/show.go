@@ -15,6 +15,9 @@ const (
 	Friday    = "Fri"
 	Saturday  = "Sat"
 	Sunday    = "Sun"
+
+	MaxTitleLen    = 100
+	MaxTimeslotLen = 100
 )
 
 var weekdays = []string{Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}
@@ -33,8 +36,11 @@ func (o Show) Validate() error {
 	if !common.Contains(weekdays, o.Weekday) {
 		return fmt.Errorf("invalid weekday")
 	}
-	if len(o.Timeslot) != 11 {
+	if len(o.Timeslot) != MaxTimeslotLen {
 		return fmt.Errorf("invalid timeslot. Acceptable format is hh:mm-hh:mm")
+	}
+	if len(o.Title) != MaxTitleLen {
+		return fmt.Errorf("title cannot be more than %d characters", MaxTitleLen)
 	}
 	parts := strings.Split(o.Timeslot, "-")
 	if len(parts) != 2 {
