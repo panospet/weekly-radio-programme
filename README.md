@@ -30,6 +30,10 @@ Simple mechanism for keeping track of radio shows and avoid conflicts.
 
 ### Locally
 
+#### Docker is a prerequisite
+
+I assume that you have Docker installed. If not, check [here](https://docs.docker.com/engine/install/ubuntu/).
+
 #### Start Db
 
 To start db, run:
@@ -50,9 +54,13 @@ PORT=6000
 
 obviously the above vars change according to your configuration.
 
-#### Docker is a prerequisite
+#### Run migrations
 
-I assume that you have Docker installed. If not, check [here](https://docs.docker.com/engine/install/ubuntu/).
+```shell
+make migrate
+```
+
+and you'll see the corresponding message that migrations are made.
 
 #### Run using Go
 
