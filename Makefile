@@ -81,3 +81,7 @@ migrate-new: ## create a new database migration
 test-migrate: ## run all new database migrations
 	@echo "Running all new database migrations..."
 	@$(MIGRATE_TEST_DB) up
+
+.PHONY: run
+run: db-start build
+	docker run --rm -it -v $(shell pwd):/app -v $(shell pwd)/.env:/go/.env --net host golang:1.17.1-alpine /app/weeklyprogramme
